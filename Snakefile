@@ -3,7 +3,7 @@
 
 
 # Allow users to fix the underlying OS via singularity.
-#container: "docker://continuumio/miniconda3"
+container: "docker://continuumio/anaconda3"
 
 configfile: "config/config.yaml"
 
