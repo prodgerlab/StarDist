@@ -1,0 +1,113 @@
+# This file should contain everything to configure the workflow on a global scale.
+
+
+#this is the order of channels in the tif file
+channels:
+  - CCR5
+  - CD4
+  - CD3
+  - DAPI
+
+
+#indices here are is
+split_set:
+  training:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+#    - 7 
+#    - 8
+    - 9
+  validation:
+    - 10
+  test:
+    - 10
+
+
+#relative to the input zip folder
+in_images: 
+  DAPI: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/RAW/FOV{i}-DAPI.tif'
+  CD3: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/RAW/FOV{i}-CD3.tif'
+  CD4: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/RAW/FOV{i}-CD4.tif'
+  CCR5: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/RAW/FOV{i}-CCR5.tif'
+
+
+in_multichan: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/RAW/FOV{i}-ORIGINAL_ALL CHANNELS.tif'
+  
+
+in_masks:
+  DAPI: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPI.tif'
+  DAPICD3: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3.tif'
+  DAPICD4: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD4.tif'
+  DAPICCR5: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICCR5.tif'
+  DAPICD3CCR5: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3CCR5.tif'
+  DAPICD4CCR5: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD4CCR5.tif'
+  DAPICD3CD4: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3CD4.tif'
+  DAPICD3CD4CCR5: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3CD4CCR5.tif'
+
+# -- below is not used yet
+
+# we train a diff model for each binary mask
+# if any other parameters need to be customized, then they can go under here.. 
+models:
+  DAPI:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPI.tif'
+    in_channels:
+      - DAPI
+  DAPICD3:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3.tif'
+    in_channels:
+      - DAPI
+      - CD3
+  DAPICD4:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD4.tif'
+    in_channels:
+      - DAPI
+      - CD3
+  DAPICCR5:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICCR5.tif'
+    in_channels:
+      - DAPI
+      - CCR5
+  DAPICD3CD4:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3CD4.tif'
+    in_channels:
+      - DAPI
+      - CD3
+      - CD4
+  DAPICD3CCR5:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3CCR5.tif'
+    in_channels:
+      - DAPI
+      - CD3
+      - CCR5
+  DAPICD3CD4CCR5:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD3CD4CCR5.tif'
+    in_channels:
+      - DAPI
+      - CD3
+      - CD4
+      - CCR5
+  DAPICD4CCR5:
+    in_labels: 'raw_data/Sample FOVs-Manual Counting/FOV{i}/BINARY/FOV{i} DAPICD4CCR5.tif'
+    in_channels:
+      - DAPI
+      - CD4
+      - CCR5
+
+inference_channels:
+  - CCR5
+  - CD4
+  - CD3
+  - DAPI
+
+#maybe use samples.tsv for this?
+inference_tif:
+  - 'raw_data/Sample FOVs-Manual Counting/FullSizeImages/APM004-IFS-CD3CD4CCR5.tif'
+  - 'raw_data/Sample FOVs-Manual Counting/FullSizeImages/APM004-OFS-CD3CD4CCR5.tif'
+  - 'raw_data/Sample FOVs-Manual Counting/FullSizeImages/APM015-IFS-CD3CD4CCR5.tif'
+  - 'raw_data/Sample FOVs-Manual Counting/FullSizeImages/APM015-OFS-CD3CD4CCR5.tif'
+

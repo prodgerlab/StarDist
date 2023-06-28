@@ -2,8 +2,6 @@
 # After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
 
 
-# Allow users to fix the underlying OS via singularity.
-container: "docker://continuumio/anaconda3"
 
 configfile: "config/config.yaml"
 
@@ -70,7 +68,6 @@ rule train_model:
                                         allow_missing=True),
     output:
         model_dir = directory('results/models/{chan,[a-zA-Z0-9]+}')
-    container: 'stardist.sif'
     threads: 8
     resources:
         gpus = 1,
@@ -88,7 +85,6 @@ rule train_model_multichan:
                                         allow_missing=True),
     output:
         model_dir = directory('results/models/multichan_{chan}')
-    container: 'stardist.sif'
     threads: 8
     resources:
         gpus = 1,
@@ -102,7 +98,6 @@ rule export_model:
         model_dir = directory('results/models/multichan_{chan}')
     output:
         model_zip = 'results/models/multichan_{chan}_model.zip'
-    container: 'stardist.sif'
     threads: 1
     script: 'scripts/export_model.py'
 
@@ -122,7 +117,6 @@ rule predict_test_labels:
         fiji_rois = expand('results/predictions/multichan_{chan}/image{i}_rois.zip',
                                         i=config['split_set']['test'],
                                         allow_missing=True),
-    container: 'stardist.sif'
     script: 'scripts/predict.py'
 
 
